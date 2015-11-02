@@ -21,4 +21,10 @@ img{
 	width: 100%;
 }
 
+.row-wrapper{
+	overflow: hidden;
+	float: left;
+	width: 100%;
+}
+
 
