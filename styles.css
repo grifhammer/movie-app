@@ -1,0 +1,24 @@
+#site-wrapper{
+	max-width: 1000px;
+	width: 100%;
+}
+#header{
+	width: 90%;
+}
+
+#now-playing-wrapper{
+	width: 90%;
+	margin: auto;
+}
+
+.poster-wrapper{
+	width: 20%;
+	margin: 10px 2.5% 10px;
+	float: left;
+}
+
+img{
+	width: 100%;
+}
+
+
