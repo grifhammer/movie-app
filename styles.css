@@ -1,9 +1,12 @@
 #site-wrapper{
 	max-width: 1000px;
 	width: 100%;
+	margin: auto;
 }
 #header{
 	width: 90%;
+	font-size: 30px;
+	font-weight: bold;
 }
 
 #now-playing-wrapper{

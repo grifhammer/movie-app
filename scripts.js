@@ -3,7 +3,6 @@ $(document).ready(function(){
 	var movieObjIndex = 0;
 	$(posters).each(function(){
 		var currPoster = $(this).find('img')
-		$(currPoster).attr('src', objectArray[movieObjIndex].poster_path);
-		movieObjIndex++;
+		$(currPoster).attr('src', objectArray[movieObjIndex++].poster_path);
 	});
 });
