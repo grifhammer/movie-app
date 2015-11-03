@@ -11,12 +11,8 @@ $(document).ready(function(){
 	var siteConfig = 'https://api.themoviedb.org/3/configuration?api_key='+apiKey;
 	// console.log(siteConfig);
 	
-	var configJSON = $.ajax({
-	 dataType: "json",
-	 url: siteConfig
-	});
 
-	configJSON.done(function(data){
+	$.getJSON(siteConfig, function(data){
 	 	basePath = data.images.base_url;
 		sizeOptions	= data.images.poster_sizes;
 		posterSize = 'w300';
@@ -58,75 +54,105 @@ $(document).ready(function(){
 			var objectArray = data.results;
 
 			var actorFunction = function(){
-				
-				if(objectArray[movieObjIndex].poster_path){
+
+				if(this.profile_path){
 					if(numPictures != 0 && numPictures%4 == 0){
 						html += '</div>'
 					}
 					if(numPictures % 4 == 0){
 						html += '<div class="row-wrapper">'
 					}
-					posterSource = basePath + 'w300' + objectArray[movieObjIndex++].poster_path;
+					profileSource = basePath + 'w300' + this.profile_path;
 					html += '<div class="poster-wrapper">'
-					html += '<img class="poster" src="' + posterSource +'">' + objectArray[movieObjIndex-1].title;
+					html += '<img class="poster" src="' + profileSource +'">' + this.name;
 					html +='</div>'
+					// makeModalHTML(this);
 					numPictures++;
-				} else{
-					movieObjIndex++;
 				}
 			}
 			var movieFunction = function(){
-
-				if(objectArray[movieObjIndex].poster_path){
+				if(this.poster_path){
 					if(numPictures != 0 && numPictures%4 == 0){
 						html += '</div>'
 					}
 					if(numPictures % 4 == 0){
 						html += '<div class="row-wrapper">'
 					}
-					posterSource = basePath + 'w300' + objectArray[movieObjIndex++].poster_path;
+					posterSource = basePath + 'w300' + this.poster_path;
 					html += '<div class="poster-wrapper">'
-					html += '<img class="poster" src="' + posterSource +'">' + objectArray[movieObjIndex-1].title;
+					html += '<img class="poster" src="' + posterSource +'">' + this.title;
 					html +='</div>'
+					// makeModalHTML(this);
 					numPictures++;
-				} else{
-					movieObjIndex++;
 				}
 			}
+			var tvFunction =function(){
+				if(this.poster_path){
+					if(numPictures != 0 && numPictures%4 == 0){
+						html += '</div>'
+					}
+					if(numPictures % 4 == 0){
+						html += '<div class="row-wrapper">'
+					}
+					posterSource = basePath + 'w300' + this.poster_path;
+					html += '<div class="poster-wrapper">'
+					html += '<img class="poster" src="' + posterSource +'">' + this.original_name;
+					html +='</div>'
+					// makeModalHTML(this);
+					numPictures++;
+				}
+			}
+			var anyFunction = function(){
+				switch(this.media_type){
+					case 'tv':
+						$(this).each(tvFunction)
+						break;
+					case 'movie':
+						$(this).each(movieFunction)
+						break;
+					case 'person':
+						$(this).each(actorFunction)
+						break;
+				}
 
-
-			var directorFunction = function(){}
-			var anyFunction = function(){}
+			}
 			switch(selectBoxVar){
 				case 'movie':
-					$(objectArray).each(movieFunction());
+					$(objectArray).each(movieFunction);
 					break;
-				case 'actor':
-					$(objectArray).each(actorFunction());
+				case 'person':
+					$(objectArray).each(actorFunction);
 					break;
 				case 'director':
-					$(objectArray).each(directorFunction());
+					$(objectArray).each(directorFunction);
 					break;
 				case 'multi':
-					$(objectArray).each(directorFunction());
+					$(objectArray).each(anyFunction);
 					break;
 			}
-			$(objectArray).each(movieFunction());
 			$('#searched-movies').html(html);
-		})
+
+			// $('.poster-wrapper').click(function(){
+			// 	var modalId = 'posterModal' + $(this).find('img').attr('src');
+			// 	$(modalId).modal();
+			// });
+		});
+		// function makeModalHTML(object){
+		// 	var modalHTML = '<div class="modal" id="posterModal'+ $(this).find('poster').attr('src') + '">'
+		// 	modalHTML += '<div class="modal-dialog" role="document">'
+		// 	modalHTML += '<div class="modal-content">'
+		// 	modalHTML += '<div class="modal-header">'
+		// 	modalHTML += '<h4 class="modal-title" id="myModalTitle">BUTSSBUTSSBUTTSBUTTS</h4>'
+		// 	modalHTML += '</div>'
+		// 	modalHTML += '<div class="modal-body">DICKSDICKSDICKSDICKS'
+		// 	modalHTML += '</div>'
+		// 	modalHTML += '</div>'
+		// 	modalHTML += '</div>'
+		// 	modalHTML += '</div>'
+		// 	$('body').appendTo(modalHTML)
+		// }
 		event.preventDefault();
+		
 	});
-
-
-
-
-	// $.getJSON( "https://api.themoviedb.org/3/configuration?api_key=053c97e8525ebeb4ca1e347bea38a1c8", function(data){
-	// 	basePath = data.images.base_url;
-	// 	sizeOptions - data.images.poster_sizes;
-	// 	posterSize = 'w300';
-	// 	logoSizes = logoSizes['original'];
-	// 	profileSizes = profileSizes['original'];
-	// });
-
 	
 });
