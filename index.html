@@ -9,10 +9,18 @@
 </head>
 <body>
 	<div id='site-wrapper'>
-		<div id='search-wrapper'>
-			<input type='text' id='user-search' placeholder='Search'>
-			<button type='submit' id='search-button'>Search!</button>
-		</div>
+		<form id='search-form-wrapper'>
+			<div id='search-wrapper'>
+				<input type='text' id='user-search' placeholder='Search'>
+				<button type='submit' id='search-button'>Search!</button>
+				<select name="search-select" id='search-select'>
+					<option value="movie">Movie</option>
+					<option value="actor">Actor</option>
+					<option value="director">Director</option>
+					<option value="multi">Any</option>
+				</select>
+			</div>
+		</form>
 		<div id='searched-movies-wrapper'>
 			<div id='searched-movies-header' class='header'>Searched!
 			</div>
